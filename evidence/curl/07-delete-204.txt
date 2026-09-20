@@ -1,0 +1,10 @@
+HTTP/1.1 204 No Content
+X-Powered-By: Express
+Access-Control-Allow-Origin: http://localhost:5500
+Vary: Origin
+Access-Control-Allow-Credentials: true
+Access-Control-Expose-Headers: ETag,Location
+Date: Fri, 18 Sep 2026 16:54:07 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+

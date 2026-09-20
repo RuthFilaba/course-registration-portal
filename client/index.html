@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<!--
+  index.html
+  ICT461 Lab — Course registration page for Mulungushi University.
+  Semantic landmarks and a logical heading order make the page usable
+  with a screen reader and a keyboard alone.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Course Registration — Mulungushi University</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+  <div class="wrap">
+    <div class="brand">
+      <span class="brand-name">Mulungushi University</span>
+      <span class="brand-sub">School of Engineering and Technology</span>
+    </div>
+    <nav aria-label="Primary">
+      <a href="#register">Register</a>
+    </nav>
+  </div>
+</header>
+
+  <main id="main" class="wrap">
+    <h1>Course Registration</h1>
+    <p class="lede">
+       Register for your selected course.
+              Complete the details below to continue.
+    </p>
+
+    <form id="registration-form" novalidate>
+      <fieldset>
+        <legend>Student details</legend>
+
+        <div class="field">
+          <label for="name">Full name</label>
+          <input id="name" name="name" type="text" required autocomplete="name" />
+        </div>
+
+        <div class="field">
+          <label for="student-id">Student ID</label>
+          <input id="student-id" name="id" type="text" required />
+        </div>
+
+       <div class="field">
+  <label for="programme">Programme</label>
+  <select id="programme" name="programme" required>
+    <option value="">Select a programme</option>
+    <option>Computer Science</option>
+    <option>Data Science</option>
+    <option>Cybersecurity</option>
+    <option>Information Technology</option>
+  </select>
+</div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Course selection</legend>
+
+        <div class="field">
+          <label for="course">Course</label>
+          <select id="course" name="course" required>
+            <option value="">Select a course</option>
+          </select>
+        </div>
+      </fieldset>
+
+      <div class="actions">
+        <button type="submit">Submit registration</button>
+      </div>
+    </form>
+
+    <p id="status" role="status" aria-live="polite" class="status"></p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>&copy; 2026 Mulungushi University &middot; ICT461 Lab</p>
+    </div>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

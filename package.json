@@ -1,0 +1,17 @@
+{
+  "name": "mulungushi-registration",
+  "version": "1.0.0",
+  "description": "ICT461 Lab — Course registration portal for Mulungushi University",
+  "type": "module",
+  "scripts": {
+    "start:api": "node server/server.js",
+    "start:client": "npx serve client -l 5500"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "serve": "^14.2.6"
+  }
+}
