@@ -42,6 +42,14 @@ const courses = [
   { code: "ICT431", name: "Capstone Project I" },
 ];
 
+const validProgrammes = new Set([
+  "Computer Science",
+  "BSc Computer Science",
+  "Data Science",
+  "Cybersecurity",
+  "Information Technology",
+]);
+
 // Registrations are seeded with one record so GET /:id has something to return
 // during the first round of manual testing.
 const registrations = new Map();
@@ -51,6 +59,15 @@ registrations.set("STU001", {
   programme: "BSc Computer Science",
   course: "ICT461",
 });
+
+function getRecords(studentId) {
+  const records = registrations.get(studentId);
+  return Array.isArray(records) ? records : records ? [records] : [];
+}
+
+function getRecord(studentId) {
+  return getRecords(studentId)[0];
+}
 
 // This function computes a stable ETag from any JSON-serialisable value so
 // that GET /api/courses can support conditional requests without storing state.
@@ -69,6 +86,9 @@ function validateRegistration(body) {
   if (!body.id || typeof body.id !== "string") errors.push("student id is required");
   if (!body.programme || typeof body.programme !== "string") errors.push("programme is required");
   if (!body.course || typeof body.course !== "string") errors.push("course is required");
+  if (body.programme && !validProgrammes.has(body.programme)) {
+    errors.push("programme is not valid");
+  }
   if (body.course && !courses.some((c) => c.code === body.course)) {
     errors.push("course is not in the assigned list");
   }
@@ -91,7 +111,7 @@ app.get("/api/courses", (req, res) => {
 // This route returns one registration by student id, or 404 when the record
 // is unknown.
 app.get("/api/registrations/:id", (req, res) => {
-  const record = registrations.get(req.params.id);
+  const record = getRecord(req.params.id);
   if (!record) return res.status(404).json({ error: "Registration not found" });
   res.status(200).json(record);
 });
@@ -102,8 +122,10 @@ app.post("/api/registrations", (req, res) => {
   const errors = validateRegistration(req.body);
   if (errors.length) return res.status(400).json({ error: "Invalid data", details: errors });
 
-  const existing = registrations.get(req.body.id);
-  if (existing && existing.course === req.body.course) {
+  const existing = getRecords(req.body.id).some(
+    (record) => record.course === req.body.course
+  );
+  if (existing) {
     return res.status(409).json({ error: "Duplicate registration" });
   }
 
@@ -113,7 +135,7 @@ app.post("/api/registrations", (req, res) => {
     programme: req.body.programme,
     course: req.body.course,
   };
-  registrations.set(record.id, record);
+  registrations.set(record.id, [...getRecords(record.id), record]);
   res.set("Location", `/api/registrations/${record.id}`);
   res.status(201).json(record);
 });
@@ -125,22 +147,27 @@ app.put("/api/registrations/:id", (req, res) => {
   if (errors.length) return res.status(400).json({ error: "Invalid data", details: errors });
 
   const record = { ...req.body, id: req.params.id };
-  registrations.set(req.params.id, record);
+  const records = getRecords(req.params.id);
+  if (records.length) {
+    records[0] = record;
+    registrations.set(req.params.id, records);
+  } else {
+    registrations.set(req.params.id, [record]);
+  }
   res.status(200).json(record);
 });
 
 // This route allows the student to change only their programme preference,
 // which is the single mutable field in this prototype.
 app.patch("/api/registrations/:id", (req, res) => {
-  const record = registrations.get(req.params.id);
+  const record = getRecord(req.params.id);
   if (!record) return res.status(404).json({ error: "Registration not found" });
 
-  if (!req.body.programme || typeof req.body.programme !== "string") {
-    return res.status(400).json({ error: "programme is required" });
+  if (!req.body.programme || !validProgrammes.has(req.body.programme)) {
+    return res.status(400).json({ error: "programme is invalid" });
   }
 
   record.programme = req.body.programme;
-  registrations.set(req.params.id, record);
   res.status(200).json(record);
 });
 

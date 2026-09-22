@@ -24,17 +24,20 @@ will be blocked.
 
 ## Records are held in memory
 
-Registrations are stored in a `Map` inside `server.js`.
+Registrations are stored in a `Map` inside `server.js`, with an array of
+course registrations for each student ID.
 
 **Decision:** no database.
 
 **Reason:** the brief states "a database and real authentication are
-outside this lab." A `Map` gives constant-time lookup by student ID,
-which is what the route handlers need. It also has no installation cost
-and no setup beyond `npm install`.
+outside this lab." A `Map` gives constant-time lookup by student ID while
+the per-student array preserves separate course registrations. The API
+rejects a repeated student ID and course combination. It also has no
+installation cost and no setup beyond `npm install`.
 
-**Consequence:** restarting the server resets all registrations. That is
-acceptable for a demonstration.
+**Consequence:** restarting the server resets all registrations, and the
+student-ID routes operate on the first record when a student has multiple
+course registrations. That is acceptable for this demonstration API.
 
 ## Validation is server-side only at runtime
 

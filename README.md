@@ -151,7 +151,7 @@ Changes the programme only.
 | Method and route | `PATCH /api/registrations/:id` |
 | Request body | `{ programme }` |
 | Success | `200 OK` — the updated record |
-| Failure 1 | `400 Bad Request` — missing or empty programme |
+| Failure 1 | `400 Bad Request` — missing or invalid programme value |
 | Failure 2 | `404 Not Found` — unknown student ID |
 
 ### DELETE /api/registrations/:id
