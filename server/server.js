@@ -33,7 +33,15 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// The assigned courses for Year 4 Semester 1, with ICS441 corrected.
+// Registration responses must never be cached. A cached 201 would hide a
+// new registration; a cached 409 would keep the student from retrying.
+// no-store tells browsers and proxies not to store the response at all.
+app.use("/api/registrations", (req, res, next) => {
+  res.set("Cache-Control", "no-store");
+  next();
+});
+
+// The assigned courses for Year 4 Semester 1
 const courses = [
   { code: "ICT411", name: "Cloud Computing & Distributed Systems" },
   { code: "ICT461", name: "Web Systems & Technology (Full Stack Engineering)" },

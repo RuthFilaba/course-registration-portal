@@ -1,0 +1,15 @@
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Access-Control-Allow-Origin: http://localhost:5500
+Vary: Origin
+Access-Control-Allow-Credentials: true
+Access-Control-Expose-Headers: ETag,Location
+ETag: "6af238a9f5f733387cbdef4181a17e34b908136b"
+Cache-Control: public, max-age=60
+Content-Type: application/json; charset=utf-8
+Content-Length: 322
+Date: Thu, 24 Sep 2026 06:41:52 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+[{"code":"ICT411","name":"Cloud Computing & Distributed Systems (Updated)"},{"code":"ICT461","name":"Web Systems & Technology (Full Stack Engineering)"},{"code":"ICS441","name":"Advanced Cybersecurity & Ethical Hacking"},{"code":"ICT481","name":"Software Project Management"},{"code":"ICT431","name":"Capstone Project I"}]

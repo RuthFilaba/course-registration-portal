@@ -1,0 +1,12 @@
+HTTP/1.1 304 Not Modified
+X-Powered-By: Express
+Access-Control-Allow-Origin: http://localhost:5500
+Vary: Origin
+Access-Control-Allow-Credentials: true
+Access-Control-Expose-Headers: ETag,Location
+ETag: "c922ca6c420753aef92cde137915c7f15e3df64f"
+Cache-Control: public, max-age=60
+Date: Thu, 24 Sep 2026 06:35:52 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
